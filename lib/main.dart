@@ -2,12 +2,25 @@ import 'package:flutter/material.dart';
 import 'package:flutterfirebaseiot/Home/HomePage.dart';
 import 'package:get/get.dart';
 import 'Auth/Login.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'firebase_options.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 
-void main() {
+var isLogin;
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(
+    options: DefaultFirebaseOptions.currentPlatform,
+  );
+
+  var user = FirebaseAuth.instance.currentUser;
+  if (user != null) {
+    isLogin = true;
+  } else {
+    isLogin = false;
+  }
   runApp(const MyApp());
 }
-
-var isLogin = false;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
