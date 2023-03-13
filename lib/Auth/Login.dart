@@ -1,13 +1,39 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   const LoginPage({super.key, required this.title});
   final String? title;
 
   @override
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  var myemail = '';
+  var mypassword = '';
+  login() async {
+    try {
+      final usercredential =
+          await FirebaseAuth.instance.signInWithEmailAndPassword(
+        email: myemail,
+        password: mypassword,
+      );
+      return usercredential;
+    } on FirebaseAuthException catch (e) {
+      if (e.code == 'user-not-found') {
+        print('No user found for that email');
+      } else if (e.code == 'wrong-password') {
+        print('Wrong password provided for that user');
+      }
+    }
+  }
+
+  @override
   Widget build(BuildContext context) {
     final Controller c = Get.put(Controller());
+
     return Scaffold(
       body: SafeArea(
         child: Padding(
@@ -24,9 +50,11 @@ class LoginPage extends StatelessWidget {
               SizedBox(
                 height: Get.height * 0.1,
               ),
-              // Obx(() => Text('${c.count}')),
-              const TextField(
-                decoration: InputDecoration(
+              TextField(
+                onChanged: (value) {
+                  myemail = value;
+                },
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Email',
                 ),
@@ -34,8 +62,11 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              const TextField(
-                decoration: InputDecoration(
+              TextFormField(
+                onChanged: (value) {
+                  mypassword = value;
+                },
+                decoration: const InputDecoration(
                   border: OutlineInputBorder(),
                   labelText: 'Password',
                 ),
@@ -43,19 +74,15 @@ class LoginPage extends StatelessWidget {
               const SizedBox(
                 height: 10,
               ),
-              // GestureDetector(
-              //   child: const Text(
-              //     "Login ",
-              //     style: TextStyle(
-              //       fontSize: 20,
-              //       fontWeight: FontWeight.bold,
-              //     ),
-              //   ),
-              //   onTap: () => {c.increment()},
-              // ),
-              // Obx(() => Text("${c.count}")),
               OutlinedButton(
-                  onPressed: () => {c.increment()},
+                  onPressed: () async {
+                    print("start Login");
+                    var user = login();
+                    if (user != null) {
+                      Navigator.of(context).pushReplacementNamed("HomePage");
+                    }
+                    // Get.toNamed('/home'),
+                  },
                   child: const Text("Login"),
                   style: OutlinedButton.styleFrom(
                     primary: Colors.white,
