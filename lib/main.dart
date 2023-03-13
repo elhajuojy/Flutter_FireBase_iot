@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
-import 'package:flutterfirebaseiot/Auth/Login.dart';
-import 'package:get/route_manager.dart';
+import 'package:flutterfirebaseiot/Home/HomePage.dart';
+import 'package:get/get.dart';
+import 'Auth/Login.dart';
 
 void main() {
   runApp(const MyApp());
 }
+
+var isLogin = false;
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});
@@ -19,23 +22,8 @@ class MyApp extends StatelessWidget {
         useMaterial3: true,
         primarySwatch: Colors.blue,
       ),
-      home: const MyHomePage(title: 'flutterfirebaseiot'),
-    );
-  }
-}
-
-class MyHomePage extends StatelessWidget {
-  const MyHomePage({super.key, required this.title});
-  final String? title;
-
-  @override
-  Widget build(BuildContext context) {
-    return const Scaffold(
-      body: Center(
-        child: LoginPage(
-          title: 'This is the login page',
-        ),
-      ),
+      home:
+          isLogin == true ? const HomePage() : const LoginPage(title: "Login"),
     );
   }
 }
