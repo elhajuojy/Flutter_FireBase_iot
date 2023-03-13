@@ -24,8 +24,10 @@ class _LoginPageState extends State<LoginPage> {
     } on FirebaseAuthException catch (e) {
       if (e.code == 'user-not-found') {
         print('No user found for that email');
+        Get.snackbar("alert", "No user found for that email");
       } else if (e.code == 'wrong-password') {
         print('Wrong password provided for that user');
+        Get.snackbar("alert", "Wrong password provided for that user");
       }
     }
   }
@@ -77,7 +79,8 @@ class _LoginPageState extends State<LoginPage> {
               OutlinedButton(
                   onPressed: () async {
                     print("start Login");
-                    var user = login();
+                    var user = await login();
+                    print(user);
                     if (user != null) {
                       Navigator.of(context).pushReplacementNamed("HomePage");
                     }
