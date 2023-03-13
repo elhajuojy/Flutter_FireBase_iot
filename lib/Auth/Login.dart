@@ -9,22 +9,61 @@ class LoginPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final Controller c = Get.put(Controller());
     return Scaffold(
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Obx(() => Text('${c.count}')),
-            const TextField(
-              decoration: InputDecoration(
-                border: OutlineInputBorder(),
-                labelText: 'Email',
+      body: SafeArea(
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Column(
+            // mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Image.asset(
+                'assets/images/logo.png',
+                width: 200,
+                height: 200,
               ),
-            ),
-            ElevatedButton(
-                onPressed: () => {c.increment()},
-                child: const Text("Click me "))
-          ],
+              SizedBox(
+                height: Get.height * 0.1,
+              ),
+              // Obx(() => Text('${c.count}')),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Email',
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              const TextField(
+                decoration: InputDecoration(
+                  border: OutlineInputBorder(),
+                  labelText: 'Password',
+                ),
+              ),
+              const SizedBox(
+                height: 10,
+              ),
+              // GestureDetector(
+              //   child: const Text(
+              //     "Login ",
+              //     style: TextStyle(
+              //       fontSize: 20,
+              //       fontWeight: FontWeight.bold,
+              //     ),
+              //   ),
+              //   onTap: () => {c.increment()},
+              // ),
+              // Obx(() => Text("${c.count}")),
+              OutlinedButton(
+                  onPressed: () => {c.increment()},
+                  child: const Text("Login"),
+                  style: OutlinedButton.styleFrom(
+                    primary: Colors.white,
+                    backgroundColor: Colors.blue,
+                    onSurface: Colors.grey,
+                  ))
+            ],
+          ),
         ),
       ),
     );
