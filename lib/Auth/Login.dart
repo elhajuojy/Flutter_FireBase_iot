@@ -40,59 +40,66 @@ class _LoginPageState extends State<LoginPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Column(
-            // mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: [
-              Image.asset(
-                'assets/images/logo.png',
-                width: 200,
-                height: 200,
-              ),
-              SizedBox(
-                height: Get.height * 0.1,
-              ),
-              TextField(
-                onChanged: (value) {
-                  myemail = value;
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Email',
+          child: SingleChildScrollView(
+            child: Column(
+              // mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Image.asset(
+                  'assets/images/logo.png',
+                  width: 200,
+                  height: 200,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              TextFormField(
-                onChanged: (value) {
-                  mypassword = value;
-                },
-                decoration: const InputDecoration(
-                  border: OutlineInputBorder(),
-                  labelText: 'Password',
+                SizedBox(
+                  height: Get.height * 0.1,
                 ),
-              ),
-              const SizedBox(
-                height: 10,
-              ),
-              OutlinedButton(
-                  onPressed: () async {
-                    print("start Login");
-                    var user = await login();
-                    print(user);
-                    if (user != null) {
-                      Navigator.of(context).pushReplacementNamed("HomePage");
-                    }
-                    // Get.toNamed('/home'),
-                  },
-                  child: const Text("Login"),
-                  style: OutlinedButton.styleFrom(
-                    primary: Colors.white,
-                    backgroundColor: Colors.blue,
-                    onSurface: Colors.grey,
-                  ))
-            ],
+                Column(
+                  children: [
+                    TextField(
+                      onChanged: (value) {
+                        myemail = value;
+                      },
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Email',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    TextFormField(
+                      onChanged: (value) {
+                        mypassword = value;
+                      },
+                      decoration: const InputDecoration(
+                        border: OutlineInputBorder(),
+                        labelText: 'Password',
+                      ),
+                    ),
+                    const SizedBox(
+                      height: 10,
+                    ),
+                    OutlinedButton(
+                        onPressed: () async {
+                          print("start Login");
+                          var user = await login();
+                          print(user);
+                          if (user != null) {
+                            Navigator.of(context)
+                                .pushReplacementNamed("HomePage");
+                          }
+                          // Get.toNamed('/home'),
+                        },
+                        child: const Text("Login"),
+                        style: OutlinedButton.styleFrom(
+                          primary: Colors.white,
+                          backgroundColor: Colors.blue,
+                          onSurface: Colors.grey,
+                        ))
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),
