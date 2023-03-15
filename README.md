@@ -1,14 +1,6 @@
-# flutterfirebaseiot
+# flutter_application_1
 
-
-<div>
-<img src="https://user-images.githubusercontent.com/86893073/224828583-bbd16093-d9dc-4ae1-8c7d-68999a0569a9.png" style="width:300px" />
-
-<img src="https://user-images.githubusercontent.com/86893073/224828609-1de1ae2b-4a0c-4b96-a347-b032db044654.png" style="width:300px" />
-</div>
-
-
-
+A new Flutter project.
 
 ## Getting Started
 
