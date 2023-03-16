@@ -1,4 +1,4 @@
-import 'dart:math';
+import 'dart:ffi';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
@@ -20,6 +20,7 @@ class _HomePageState extends State<HomePage> {
   }
 
   var temp = "0".obs;
+  var timeStamp = "0".obs;
 
   getData() async {
     var ref = FirebaseDatabase.instance.ref().child("data");
@@ -30,6 +31,12 @@ class _HomePageState extends State<HomePage> {
         Object? data = snapshot.value;
         Map<dynamic, dynamic> map = data as Map<dynamic, dynamic>;
         temp.value = map["temp"].toString();
+        timeStamp.value = map["timestamp"].toString();
+        timeStamp.value = DateTime.fromMillisecondsSinceEpoch(
+                (int.parse(map["timestamp"]) - 60 * 8) * 1000)
+            .toString();
+
+        print(timeStamp.value);
       }
       // print(snapshot.value);
     });
@@ -46,6 +53,8 @@ class _HomePageState extends State<HomePage> {
     DateTime now = DateTime.now();
     String formattedDate = DateFormat.yMMMEd().format(now);
     var formattedTime = DateFormat.jm().format(now);
+    // timeStamp = "$formattedDate $formattedTime".obs;
+
     return Scaffold(
         appBar: AppBar(
           title: const Text("Flutter Firebase IoT"),
@@ -72,16 +81,21 @@ class _HomePageState extends State<HomePage> {
                 height: 20,
               ),
               Card(
-                  child: Padding(
-                padding: const EdgeInsets.all(16.0),
-                child: SizedBox(
-                    width: Get.width,
-                    child: Text("Date : $formattedDate $formattedTime",
-                        style: const TextStyle(
-                          fontSize: 16,
-                          fontWeight: FontWeight.normal,
-                        ))),
-              )),
+                child: Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: SizedBox(
+                      width: Get.width,
+                      child: Obx(
+                        () => Text(
+                          "Date : $timeStamp",
+                          style: const TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.normal,
+                          ),
+                        ),
+                      )),
+                ),
+              ),
               Card(
                   child: Padding(
                 padding: const EdgeInsets.all(16.0),
@@ -93,29 +107,16 @@ class _HomePageState extends State<HomePage> {
                           fontWeight: FontWeight.normal,
                         ))),
               )),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    MainCard(temp: temp, title: "Température :(°C)"),
-                    MainCard(
-                      temp: '6.93'.obs,
-                      title: "PH :",
-                    ),
-                  ],
-                ),
+              SizedBox(
+                height: Get.height / 6,
               ),
               Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    MainCard(temp: temp),
-                    MainCard(
-                      temp: '50'.obs,
-                      title: "Water Level : ",
-                    ),
+                    MainCard(temp: temp, title: "Température :(°C)"),
                   ],
                 ),
               ),
