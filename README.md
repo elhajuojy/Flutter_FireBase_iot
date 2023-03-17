@@ -1,4 +1,4 @@
-# Flutter Firebqse IoT 
+# Flutter Firebase IoT 
 
 A new Flutter project.
 
